@@ -18,6 +18,7 @@ const Pet = ({ name, animal, breed, images, location, id }) => {
 
     return (
         <Link to={`/details/${id}`} className="pet">
+            {/*  Link is used because this way, the page is not reloaded each time the user clicks*/}
             <div className="image-container">
                 <img src={hero} alt={name} />
             </div>
