@@ -16,7 +16,7 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
-    const adoptedPet = useState(null);
+    const adoptedPet = useState(null); //in this case the whole useState hook is provided to each of the components that are wrapped in the AdoptedPetContext.Provider
     return (
         <BrowserRouter>
             <QueryClientProvider client={queryClient}>
