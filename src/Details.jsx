@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import ErrorBoundary from './ErrorBoundary';
 import Carousel from './Carousel';
@@ -37,7 +38,14 @@ const Details = () => {
 
 function DetailsErrorBoundary() {
     return (
-        <ErrorBoundary>
+        <ErrorBoundary
+            errorComponent={
+                <h2>
+                    There was an error with this listing.{' '}
+                    <Link to="/">Click here</Link> to go back to the home page
+                </h2>
+            }
+        >
             <Details />
         </ErrorBoundary>
     );
