@@ -17,12 +17,12 @@ const Pet = ({ name, animal, breed, images, location, id }) => {
     }
 
     return (
-        <Link to={`/details/${id}`} className="pet">
+        <Link to={`/details/${id}`} className="relative block">
             {/*  Link is used because this way, the page is not reloaded each time the user clicks*/}
             <div className="image-container">
                 <img src={hero} alt={name} />
             </div>
-            <div className="info">
+            <div className="b absolute bottom-0 left-0 rounded-tr-xl bg-gradient-to-tr from-white to-transparent pr-2 pt-2">
                 <h1>{name}</h1>
                 <h2>{`${animal} - ${breed} - ${location}`}</h2>
             </div>
