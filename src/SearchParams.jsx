@@ -15,6 +15,7 @@ export const SearchParams = () => {
     });
     const [animal, setAnimal] = useState('');
     const [breeds] = useBreedList(animal);
+    // eslint-disable-next-line no-unused-vars
     const [adoptedPet, _] = useContext(AdoptedPetContext);
 
     const results = useQuery(['search', requestParams], fetchSearch);

@@ -3,8 +3,9 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AdoptedPetContext from './AdoptedPetContext';
-import SearchParams from './SearchParams';
-import Details from './Details';
+
+const Details = lazy(() => import('./Details'));
+const SearchParams = lazy(() => import('./SearchParams'));
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -18,30 +19,37 @@ const queryClient = new QueryClient({
 const App = () => {
     const adoptedPet = useState(null); //in this case the whole useState hook is provided to each of the components that are wrapped in the AdoptedPetContext.Provider
     return (
-        <div
-            className="m-0 p-0"
-            style={{
-                background:
-                    'url(https://pets-images.dev-apis.com/pets/wallpaperC.jpg)'
-            }}
-        >
+        <div>
             <BrowserRouter>
-                <QueryClientProvider client={queryClient}>
-                    <AdoptedPetContext.Provider value={adoptedPet}>
-                        <header className="mb-10 w-full bg-gradient-to-b from-yellow-400 via-orange-500 to-red-500 p-7 text-center">
-                            <Link
-                                to="/"
-                                className="text-6xl text-white hover:text-gray-200"
-                            >
-                                Adopt Me!
-                            </Link>
-                        </header>
-                        <Routes>
-                            <Route path="/details/:id" element={<Details />} />
-                            <Route path="/" element={<SearchParams />} />
-                        </Routes>
-                    </AdoptedPetContext.Provider>
-                </QueryClientProvider>
+                <AdoptedPetContext.Provider value={adoptedPet}>
+                    <QueryClientProvider client={queryClient}>
+                        <Suspense
+                            fallback={
+                                <div className="p-15 relative flex justify-center">
+                                    <h2 className="animate-spin align-middle text-8xl">
+                                        🐶
+                                    </h2>
+                                </div>
+                            }
+                        >
+                            <header className="mb-10 w-full bg-gradient-to-b from-yellow-400 via-orange-500 to-red-500 p-7 text-center">
+                                <Link
+                                    to="/"
+                                    className="text-6xl text-white hover:text-gray-200"
+                                >
+                                    Adopt Me!
+                                </Link>
+                            </header>
+                            <Routes>
+                                <Route
+                                    path="/details/:id"
+                                    element={<Details />}
+                                />
+                                <Route path="/" element={<SearchParams />} />
+                            </Routes>
+                        </Suspense>
+                    </QueryClientProvider>
+                </AdoptedPetContext.Provider>
             </BrowserRouter>
         </div>
     );
